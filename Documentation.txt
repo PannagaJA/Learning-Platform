@@ -1,0 +1,308 @@
+Role-Based Academic Management System
+(Admin • HOD • Faculty • Student)
+
+🏗️ 1. System Overview
+
+The system is a role-based web application designed to manage:
+
+• Academic structure (Departments, Semesters, Sections)
+• User roles and permissions
+• Attendance, academics, notifications
+• Dashboards for decision-making
+
+🎯 Core Objectives
+
+• Centralized academic control
+• Role-specific dashboards
+• Secure access using RBAC (Role-Based Access Control)
+• Real-time updates & reports
+• Scalable & modular architecture
+
+🧱 2. System Architecture (High Level)
+
+Architecture Layers
+
+• Frontend – React + Vite + TypeScript
+• Backend – REST API (Django/Python)
+• Database – PostgreSQL
+• Auth Layer – JWT + Role Guard
+• External APIs – Email, Notifications
+
+🔐 3. Authentication & Authorization
+
+3.1 Authentication
+
+• Login using Email / Username + Password
+• JWT Token issued on successful login
+• Token stored securely (HTTP-only / LocalStorage)
+
+3.2 Authorization (RBAC)
+
+| Role      | Access Scope              |
+|-----------|---------------------------|
+| Admin     | Full system access        |
+| HOD       | Department-level control  |
+| Faculty   | Class & subject-level control |
+| Student   | Personal academic data    |
+
+👑 4. ADMIN ROLE – FULL DOCUMENTATION
+
+4.1 Role Purpose
+
+Admin is the super-user responsible for system configuration, master data, and role assignment.
+
+4.2 Admin Responsibilities
+
+✅ User Management
+
+• Create Admin / HOD / Faculty / Student accounts
+• Assign roles and departments
+• Enable / Disable users
+
+✅ Academic Configuration
+
+• Create Departments
+• Define Semesters & Sections
+• Assign subjects
+
+✅ System Monitoring
+
+• View platform usage
+• Audit logs
+• Error tracking
+
+4.3 Admin Dashboard Modules
+
+4.3.1 User Management
+
+Functions
+
+• Add User
+• Edit User
+• Delete User
+• Assign Role
+• Reset Password
+
+Flow
+
+Admin → User Management → Create User → Assign Role → Save
+
+4.3.2 Department Management
+
+• Create / Update / Delete departments
+• Assign HOD to department
+
+4.3.3 Semester & Section Management
+
+• Define semester (1–8)
+• Create sections (A, B, C)
+• Map semester → department
+
+4.3.4 Role Assignment Logic
+
+Admin
+ ├── Creates HOD → Assigns Department
+ ├── Creates Faculty → Assigns Subject + Section
+ └── Creates Student → Assigns Semester + Section
+
+4.4 Admin Security Rules
+
+• Cannot be deleted
+• Actions logged in audit table
+• Role escalation allowed only by Admin
+
+🏫 5. HOD ROLE – FULL DOCUMENTATION
+
+5.1 Role Purpose
+
+HOD controls academic activities within a department.
+
+5.2 HOD Responsibilities
+
+• Monitor faculty & students
+• Manage semester & section data
+• Send notifications
+• Generate reports
+
+5.3 HOD Dashboard Modules
+
+5.3.1 Semester & Section Management
+
+Functions
+
+• View semesters
+• Filter by academic year
+• Add/Edit section
+• Toggle Active/Inactive
+
+5.3.2 Faculty Management
+
+• View faculty list
+• Assign subjects
+• Monitor workload
+
+5.3.3 Student Monitoring
+
+• View student list
+• Filter by semester / section
+• View attendance & performance
+
+5.3.4 Attendance Overview
+
+• Daily attendance summary
+• Section-wise analytics
+• Low attendance alerts
+
+5.3.5 Notifications Module
+
+• Notify faculty
+• Notify students
+• Announcements
+
+Flow
+
+HOD → Notification → Select Target → Message → Send
+
+5.3.6 Reports & Export
+
+• Export attendance (CSV / PDF)
+• Semester reports
+• Faculty performance reports
+
+5.4 HOD Permissions
+
+| Action            | Allowed |
+|-------------------|---------|
+| Create users      | ❌      |
+| Modify department | ❌      |
+| View all dept data| ✅      |
+| Notify            | ✅      |
+
+👨‍🏫 6. FACULTY ROLE – FULL DOCUMENTATION
+
+6.1 Role Purpose
+
+Faculty handles teaching, attendance, and student interaction.
+
+6.2 Faculty Responsibilities
+
+• Mark attendance
+• View assigned classes
+• Communicate with students
+• Upload internal marks (optional)
+
+6.3 Faculty Dashboard Modules
+
+6.3.1 Class Dashboard
+
+• Assigned subjects
+• Assigned sections
+• Timetable view
+
+6.3.2 Attendance Management
+
+• Mark attendance (Daily)
+• Edit attendance (restricted)
+• View attendance summary
+
+6.3.3 Student Communication
+
+• View student list
+• Reply to queries
+• Send class announcements
+
+6.3.4 Reports
+
+• Subject-wise attendance
+• Individual student report
+
+6.4 Faculty Restrictions
+
+• Cannot modify student master data
+• Cannot access other departments
+• Limited edit permissions
+
+🎓 7. STUDENT ROLE – FULL DOCUMENTATION
+
+7.1 Role Purpose
+
+Student accesses personal academic data.
+
+7.2 Student Dashboard Modules
+
+7.2.1 Profile Module
+
+• View personal details
+• View department & section
+
+7.2.2 Attendance View
+
+• Subject-wise attendance
+• Monthly summary
+• Eligibility status
+
+7.2.3 Notifications
+
+• View announcements
+• Faculty messages
+
+7.2.4 Query / Support
+
+• Raise attendance issues
+• Contact faculty
+
+7.3 Student Permissions
+
+| Feature         | Allowed |
+|-----------------|---------|
+| Edit data       | ❌      |
+| View own data   | ✅      |
+| Message faculty | ✅      |
+
+🔄 8. COMMON FEATURES (ALL ROLES)
+
+🔹 Navigation
+
+• Role-based dynamic navbar
+• Single common layout
+
+🔹 Audit Logs
+
+• Tracks important actions
+
+🔹 Notifications
+
+• Real-time alerts
+• Email / in-app
+
+🔹 Search & Filters
+
+• Semester
+• Section
+• Academic year
+
+🛡️ 9. Security & Best Practices
+
+• JWT authentication
+• Role guards on frontend & backend
+• Input validation
+• API rate limiting
+• Secure password hashing (bcrypt)
+
+🧪 10. Example Workflows
+
+Attendance Workflow
+
+Faculty → Mark Attendance → Stored in DB → HOD views analytics → Student views summary
+
+Notification Workflow
+
+HOD/Admin → Create Notification → Target Role → Delivered to dashboard
+
+📌 11. Future Enhancements
+
+• AI attendance analysis
+• Face recognition integration
+• Mobile app support
+• Analytics dashboards
+• LMS integration
